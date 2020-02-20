@@ -1,0 +1,21 @@
+name: Pull Request
+on:
+  pull-request:
+    types: [opened, edited, synchronize, reopened]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: npm install
+        run: cd vueapp && npm i && cd ../
+      - name: check linting passes
+        run: cd vueapp && npm run lint:nofix && cd ../
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: npm install
+        run: cd vueapp && npm i && cd ../
+      - name: unit tests
+        run: cd vueapp && npm run test:unit && cd ../
